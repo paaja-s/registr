@@ -7,9 +7,43 @@ use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+/**
+ * @OA\Info(
+ *     title="Vehicle register API",
+ *     version="1.0.0",
+ *     description="API for obtaining inormation about registered vehicles"
+ * )
+ */
 class VehicleController extends Controller
 {
-	
+	/**
+	 * @OA\Get(
+	 *     path="/api/registr",
+	 *     summary="Vehicle by id",
+	 *     description="Search vehicle in the registry using the id ('pcv' column). The response is object of vehicle",
+	 *     @OA\Parameter(
+	 *         name="id",
+	 *         in="path",
+	 *         description="Vehicle id",
+	 *         required=true,
+	 *         @OA\Schema(type="integer", example="26")
+	 *     ),
+	 *     @OA\Response(
+	 *         response=200,
+	 *         description="Object vehicle",
+	 *         @OA\JsonContent(
+	 *             ref="#/components/schemas/Vehicle"
+	 *         )
+	 *     ),
+	 *     @OA\Response(
+	 *         response=400,
+	 *         description="Vehicle not found",
+	 *         @OA\JsonContent(
+	 *             @OA\Property(property="error", type="string", example="Vehicle not found")
+	 *         )
+	 *     )
+	 * )
+	 */
 	public function get(int $pcv)
 	{
 		$vehicle = Vehicle::find($pcv);
@@ -21,9 +55,47 @@ class VehicleController extends Controller
 		$camelCasedData = collect($vehicle->toArray())->mapWithKeys(function ($value, $key) {
 			return [Str::camel($key) => $value];
 		});
-		
+			
 			return response()->json($camelCasedData);
 	}
+	
+	/**
+	 * @OA\Get(
+	 *     path="/api/search",
+	 *     summary="Search vehicles by VIN",
+	 *     description="Search vehicles in the registry using the VIN. The response includes vehicles only if the count is below 20, otherwise it returns the count of found results.",
+	 *     @OA\Parameter(
+	 *         name="query",
+	 *         in="query",
+	 *         description="The starting characters of the VIN to search for",
+	 *         required=true,
+	 *         @OA\Schema(type="string", example="XYZ")
+	 *     ),
+	 *     @OA\Response(
+	 *         response=200,
+	 *         description="List of vehicles or count of found results",
+	 *         @OA\JsonContent(
+	 *             oneOf={
+	 *                 @OA\Schema(
+	 *                     type="array",
+	 *                     @OA\Items(ref="#/components/schemas/VehicleShort")
+	 *                 ),
+	 *                 @OA\Schema(
+	 *                     type="object",
+	 *                     @OA\Property(property="found", type="integer", example=4000)
+	 *                 )
+	 *             }
+	 *         )
+	 *     ),
+	 *     @OA\Response(
+	 *         response=400,
+	 *         description="Invalid query input",
+	 *         @OA\JsonContent(
+	 *             @OA\Property(property="error", type="string", example="Please provide at least 3 characters.")
+	 *         )
+	 *     )
+	 * )
+	 */
 	
 	public function search(Request $request)
 	{
@@ -48,8 +120,8 @@ class VehicleController extends Controller
 		$camelCasedData = collect($results->toArray())->mapWithKeys(function ($value, $key) {
 			return [Str::camel($key) => $value];
 		});
-		
-		// Jinak vracíme seznam vozidel
-		return response()->json($camelCasedData);
+			
+			// Jinak vracíme seznam vozidel
+			return response()->json($camelCasedData);
 	}
 }
