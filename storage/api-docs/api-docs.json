@@ -8,6 +8,9 @@
     "paths": {
         "/api/registr": {
             "get": {
+                "tags": [
+                    "Vehicles"
+                ],
                 "summary": "Vehicle by id",
                 "description": "Search vehicle in the registry using the id ('pcv' column). The response is object of vehicle",
                 "operationId": "9124b056f73f8389b94defd3c6d9dce3",
@@ -54,10 +57,13 @@
             }
         },
         "/api/search": {
-            "get": {
+            "post": {
+                "tags": [
+                    "Vehicles"
+                ],
                 "summary": "Search vehicles by VIN",
                 "description": "Search vehicles in the registry using the VIN. The response includes vehicles only if the count is below 20, otherwise it returns the count of found results.",
-                "operationId": "6ad53f9de93e4ae0336a4cf7b2c6b8e3",
+                "operationId": "3f9ead7d47ef96e67ad38e108b61cc72",
                 "parameters": [
                     {
                         "name": "query",
@@ -540,5 +546,11 @@
                 "type": "object"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Vehicles",
+            "description": "Endpoints related to vehicle operations"
+        }
+    ]
 }

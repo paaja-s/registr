@@ -13,6 +13,10 @@ use Illuminate\Support\Str;
  *     version="1.0.0",
  *     description="API for obtaining inormation about registered vehicles"
  * )
+ * @OA\Tag(
+ *     name="Vehicles",
+ *     description="Endpoints related to vehicle operations"
+ * )
  */
 class VehicleController extends Controller
 {
@@ -21,6 +25,7 @@ class VehicleController extends Controller
 	 *     path="/api/registr",
 	 *     summary="Vehicle by id",
 	 *     description="Search vehicle in the registry using the id ('pcv' column). The response is object of vehicle",
+	 *     tags={"Vehicles"},
 	 *     @OA\Parameter(
 	 *         name="id",
 	 *         in="path",
@@ -60,10 +65,11 @@ class VehicleController extends Controller
 	}
 	
 	/**
-	 * @OA\Get(
+	 * @OA\Post(
 	 *     path="/api/search",
 	 *     summary="Search vehicles by VIN",
 	 *     description="Search vehicles in the registry using the VIN. The response includes vehicles only if the count is below 20, otherwise it returns the count of found results.",
+	 *     tags={"Vehicles"},
 	 *     @OA\Parameter(
 	 *         name="query",
 	 *         in="query",
