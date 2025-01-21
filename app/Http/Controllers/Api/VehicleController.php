@@ -119,7 +119,7 @@ class VehicleController extends Controller
 		->get();
 		
 		// Pokud je nalezeno více než 20 záznamů
-		if ($results->count() > 5) {
+		if ($results->count() > 20) {
 			return response()->json(['found' => $results->count()]);
 		}
 		
