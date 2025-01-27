@@ -231,7 +231,7 @@
                         "description": "Korrigovaný součinitel absorpce",
                         "type": "string"
                     },
-                    "co2MestoMimoKombiGkm": {
+                    "co2MestoMimoKombiGKm": {
                         "description": "CO2 (město/mimo/kombi, g/km)",
                         "type": "string"
                     },
@@ -251,11 +251,11 @@
                         "description": "Spotřeba podle předpisu",
                         "type": "string"
                     },
-                    "spotrebaMestoMimoKombiL100km": {
+                    "spotrebaMestoMimoKombiL100Km": {
                         "description": "Spotřeba (město/mimo/kombi, l/100 km)",
                         "type": "string"
                     },
-                    "spotrebaPriRychlostiL100km": {
+                    "spotrebaPriRychlostiL100Km": {
                         "description": "Spotřeba při rychlosti, l/100 km",
                         "type": "string"
                     },
