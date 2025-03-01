@@ -24,10 +24,10 @@ class VehicleController extends Controller
 	 * @OA\Get(
 	 *     path="/api/registr",
 	 *     summary="Vehicle by id",
-	 *     description="Search vehicle in the registry using the id ('pcv' column). The response is object of vehicle",
+	 *     description="Search vehicle in the registry using the id ('cnv' column). The response is object of vehicle",
 	 *     tags={"Vehicles"},
 	 *     @OA\Parameter(
-	 *         name="id",
+	 *         name="cnv",
 	 *         in="path",
 	 *         description="Vehicle id",
 	 *         required=true,
@@ -49,9 +49,9 @@ class VehicleController extends Controller
 	 *     )
 	 * )
 	 */
-	public function get(int $pcv)
+	public function get(int $cnv)
 	{
-		$vehicle = Vehicle::find($pcv);
+		$vehicle = Vehicle::find($cnv);
 		
 		if (!$vehicle) {
 			return response()->json(['message' => 'Vehicle not found'], 404);
@@ -114,8 +114,9 @@ class VehicleController extends Controller
 		}
 		
 		// Hledání ve sloupci `vin`
+		// cnv, vin, Vyrobce, typ, barva, rok_vyroby, cislo_tp, cislo_orv
 		$results = Vehicle::where('vin', 'like', $query . '%')
-		->select('pcv', 'vin', 'tovarni_znacka', 'typ')
+		->select('cnv', 'vin', 'brand', 'color', 'year_of_manufacture', 'technical_certificate_number', 'registration_certificate_number', 'type')
 		->get();
 		
 		// Pokud je nalezeno více než 20 záznamů
