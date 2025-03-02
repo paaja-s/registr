@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CamelCaseAttributes;
+use App\Traits\SnakeCaseAttributes;
 
 /**
  * @OA\Schema(
@@ -111,18 +113,27 @@ use Illuminate\Database\Eloquent\Model;
  *     schema="VehicleShort",
  *     title="Vehicle, short version",
  *     description="Schema of vehicle, shortened",
- *     @OA\Property(property="cnv", type="integer", description="Počítačové číslo vozidla (primární klíč vozidla)"),
+ *     @OA\Property(property="id", type="integer", example=1, description="Vehicle id"),
+ *     @OA\Property(property="userId", type="integer", example=3, description="User id"),
+ *     @OA\Property(property="assigned", type="boolean", example=true, description="Přiřazné/Nepřiřazené vozidlo"),
+ *     @OA\Property(property="deleted", type="boolean", example=false, description="Smazané/Nesmazané vozidlo"),
+ *     @OA\Property(property="licence_plate", type="string", description="Licence plate"),
+ *     @OA\Property(property="cnv", type="integer", description="PCV (primární klíč vozidla v registru)"),
  *     @OA\Property(property="vin", type="string", description="VIN vozidla"),
- *     @OA\Property(property="brand", type="string", description="Tovární značka vozidla"),
- *     @OA\Property(property="color", type="string", description="Barva vozidla"),
- *     @OA\Property(property="yearOfManufacture", type="integer", description="Rok výroby vozidla"),
+ *     @OA\Property(property="brand", type="string", description="Tovární značka"),
+ *     @OA\Property(property="color", type="string", description="Barva"),
+ *     @OA\Property(property="yearOfManufacture", type="string", example=1975, description="Rok v7roby vozidla"),
  *     @OA\Property(property="technicalCertificateNumber", type="string", description="Číslo technického průkazu"),
  *     @OA\Property(property="registrationCertificateNumber", type="string", description="Číslo ORV"),
- *     @OA\Property(property="type", type="string", description="Typ vozidla")
+ *     @OA\Property(property="typ", type="string", description="Typ vozidla"),
+ *     @OA\Property(property="createdAt", type="datetime", description="Datum a cas vytvoreni"),
+ *     @OA\Property(property="updatedAt", type="datetime", description="Datum a cas upravy")
  * )
  */
 class Vehicle extends Model
 {
+	use CamelCaseAttributes, SnakeCaseAttributes; // Prvody atributu na CamelCase a zpatky na SnakeCase
+	
 	// Tabulka pro model
 	protected $table = 'vehicle_register';
 	

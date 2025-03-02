@@ -57,11 +57,7 @@ class VehicleController extends Controller
 			return response()->json(['message' => 'Vehicle not found'], 404);
 		}
 		
-		$camelCasedData = collect($vehicle->toArray())->mapWithKeys(function ($value, $key) {
-			return [Str::camel($key) => $value];
-		});
-			
-			return response()->json($camelCasedData);
+			return response()->json($vehicle);
 	}
 	
 	/**
@@ -124,11 +120,7 @@ class VehicleController extends Controller
 			return response()->json(['found' => $results->count()]);
 		}
 		
-		$camelCasedData = collect($results->toArray())->mapWithKeys(function ($value, $key) {
-			return [Str::camel($key) => $value];
-		});
-			
 			// Jinak vracíme seznam vozidel
-			return response()->json($camelCasedData);
+			return response()->json($results);
 	}
 }
